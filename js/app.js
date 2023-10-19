@@ -92,7 +92,9 @@ window.borrarGift = (id) => {
 };
 
 
-
+const guardarEnLocalStorage = () => {
+  localStorage.setItem("giftData", JSON.stringify(datos));
+};
 
 cargarTabla();
 
