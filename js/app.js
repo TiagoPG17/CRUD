@@ -2,7 +2,6 @@ import datosJson from "../data/data.json" assert { type: "json" };
 import { Gift } from "./clases.js";
 
 
-
 const cuerpoTabla = document.querySelector("#cuerpo-tabla");
 const myModal = new bootstrap.Modal(document.getElementById("modalGift"));
 
@@ -30,6 +29,7 @@ const giftUpdate = (e) => {
   datos[index].precio = document.querySelector("#precioModal").value;
   datos[index].imagen = document.querySelector("#imagenModal").value;
 
+
   cargarTabla();
   myModal.hide();
 };
@@ -38,11 +38,11 @@ const cargarTabla = () => {
   cuerpoTabla.innerHTML = "";
   datos.map((item) => {
     const fila = document.createElement("tr");
-
     const celdas = `<th>${item.gift}</th>
         <td>${item.tipo}</td>
         <td>${item.tiempo}</td>
         <td>$${item.precio}</td>
+        <td><img src="${item.imagen}" style="max-width: 92px; max-height: 90px;"></td>
         <td>
         <div class="d-flex gap-2">
         <button class="btn btn-outline-warning" onclick="mostrarModal(${item.id})"><i class="fa fa-pencil" aria-hidden="true"></i></button>
@@ -81,10 +81,10 @@ window.borrarGift = (id) => {
 
   if (validar) {
     datos.splice(index, 1);
-
     cargarTabla();
   }
 };
+
 
 
 
