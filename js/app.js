@@ -1,6 +1,7 @@
 import datosJson from "../data/data.json" assert { type: "json" };
 import { Gift } from "./clases.js";
 
+let datos = JSON.parse(localStorage.getItem("giftData")) || datosJson;
 
 const cuerpoTabla = document.querySelector("#cuerpo-tabla");
 const myModal = new bootstrap.Modal(document.getElementById("modalGift"));
@@ -30,6 +31,8 @@ const giftUpdate = (e) => {
   datos[index].imagen = document.querySelector("#imagenModal").value;
 
 
+
+  guardarEnLocalStorage();
   cargarTabla();
   myModal.hide();
 };
@@ -38,11 +41,12 @@ const cargarTabla = () => {
   cuerpoTabla.innerHTML = "";
   datos.map((item) => {
     const fila = document.createElement("tr");
+
     const celdas = `<th>${item.gift}</th>
         <td>${item.tipo}</td>
         <td>${item.tiempo}</td>
         <td>$${item.precio}</td>
-        <td><img src="${item.imagen}"></td>
+        <td><img src="${item.imagen}" style="max-width: 92px; max-height: 90px;"></td>
         <td>
         <div class="d-flex gap-2">
         <button class="btn btn-outline-warning" onclick="mostrarModal(${item.id})"><i class="fa fa-pencil" aria-hidden="true"></i></button>
@@ -68,6 +72,7 @@ const agregarGift = (event) => {
 
   datos.push(new Gift(id, gift, tipo, tiempo, precio, imagen));
 
+  guardarEnLocalStorage();
   document.querySelector("#formGift").reset();
   cargarTabla();
 };
@@ -81,6 +86,7 @@ window.borrarGift = (id) => {
 
   if (validar) {
     datos.splice(index, 1);
+    guardarEnLocalStorage();
     cargarTabla();
   }
 };
